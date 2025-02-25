@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { UserService } from "../service/user";
-import { User } from "../model/user";
+import { UserService } from "../service/user-service";
+import { User } from "../model/user-model";
 
 const userService = new UserService();
 export const userRouter = express.Router();
@@ -202,7 +202,3 @@ userRouter.get(
     }
   }
 );
-
-//const app = express();
-//app.use(userRouter);
-//app.listen(8080, () => {console.log("listening...")})
