@@ -203,6 +203,4 @@ userRouter.get(
   }
 );
 
-//const app = express();
-//app.use(userRouter);
-//app.listen(8080, () => {console.log("listening...")})
+export default userRouter;

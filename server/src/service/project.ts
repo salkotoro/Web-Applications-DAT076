@@ -10,11 +10,11 @@ export class ProjectService {
 
     // Get a user by ID
     async getProjectById(idProj: number): Promise<Project | null> {
-        const user = this.projects.find(project => project.idProj === idProj);
-        return user ? JSON.parse(JSON.stringify(user)) : null;
+        const project = this.projects.find(project => project.idProj === idProj);
+        return project ? JSON.parse(JSON.stringify(project)) : null;
     }
 
-    // Create a new user profile
+    // Create a new project
     async createProject(name: string, description: string, salary: number, roles: number[]): Promise<Project> {
         const newProject: Project = {
             idProj: Date.now(), 

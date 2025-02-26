@@ -20,7 +20,7 @@ router.get('/:idProj', async (req: Request, res: Response) => {
 });
 
 //  Create a new project
-router.post('/', async (req: Request, res: Response) => {
+router.post('/proj', async (req: Request, res: Response) => {
     const { name, description, salary, roles } = req.body;
     
     //Add exception handling
@@ -70,9 +70,4 @@ router.delete('/:idProj/users/:id', async (req: Request, res: Response) => {
     else res.status(404).json({ message: 'Project not found' });
 });
 
-export default router;
-const app = express();
-app.use(express.json())
-
-app.use(router);
-app.listen(8080, () => {console.log("listening...")})
+export default router
