@@ -48,7 +48,9 @@ interface Project {
                     <p className="card-text"><strong>Description:</strong> {project.description}</p>
                     <p className="card-text"><strong>Salary:</strong> ${project.salary}</p>
                     
-                    <Link to={'/project/${project.idProj}'} className="btn btn-primary">View Details</Link>
+                    <Link to={`/projects/${project.idProj}`} className="btn btn-primary">View Details</Link>
+                  
+                    
                   </div>
                 </div>
               </div>

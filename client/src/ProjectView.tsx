@@ -37,6 +37,7 @@ function ProjectView() {
           <p><strong>Description:</strong> {project.description}</p>
           <p><strong>Salary:</strong> ${project.salary}</p>
           <p><strong>Status:</strong> {project.open ? "Open" : "Closed"}</p>
+          <p><strong>Members:</strong> {project.roles.length > 0 ? project.roles.join(", ") : "No members yet"} </p>
 
           <div className="text-center mt-4">
             <a href="chat.html" className="btn btn-success">Chat with Company</a>
