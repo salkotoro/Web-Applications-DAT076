@@ -3,15 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "test": "jest",
-    "test:w": "jest --watchAll",
-    "test:cov": "jest --coverage",
-    "preview": "vite preview"
-  },
+"scripts": {
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+    "test": "jest"
+},
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

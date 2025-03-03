@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import './Homepage.css'
+import { useState, useEffect } from 'react';
+import './Homepage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 
