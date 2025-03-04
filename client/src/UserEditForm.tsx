@@ -37,12 +37,13 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ userData, onSave }) => {
         style={{ maxWidth: "400px" }}
       >
         <h1 className="text-center mb-4">Edit User</h1>
-        <form onSubmit={handleSave}>
+        <form aria-label="edit-user-form" onSubmit={handleSave}>
           <div className="mb-3">
             <label htmlFor="firstName" className="form-label">
               First Name
             </label>
             <input
+              id="firstName"
               type="text"
               name="firstName"
               value={user.firstName}
@@ -55,6 +56,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ userData, onSave }) => {
               Last Name
             </label>
             <input
+              id="lastName"
               type="text"
               name="lastName"
               value={user.lastName}
@@ -67,6 +69,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ userData, onSave }) => {
               Username
             </label>
             <input
+              id="username"
               type="text"
               name="username"
               value={user.username}
@@ -79,6 +82,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ userData, onSave }) => {
               Email
             </label>
             <input
+              id="email"
               type="email"
               name="email"
               value={user.email}
