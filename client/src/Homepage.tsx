@@ -34,7 +34,21 @@ interface Project {
     <header className='bg-primary text-white text-center py-4'>
      <h1>Project Employment Hub</h1>
      <p>Find exciting project roles in software and computer science.</p>
+        {/* Navigation buttons in the upper right */}
+        <div style={{ position: "absolute", top: "5px", right: "10px" }}>
+          <Link to="/userform" className="btn btn-secondary me-2">
+            User Form
+          </Link>
+          <Link to="/usersearch" className="btn btn-secondary me-2">
+            User Search
+          </Link>
+          <Link to="/usereditform" className="btn btn-secondary">
+            Edit User
+          </Link>
+        </div>
      </header>
+
+
      <main className="container mt-5">
         {loading ? (
           <p>Loading projects...</p>
