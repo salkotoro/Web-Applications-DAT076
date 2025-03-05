@@ -11,6 +11,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   register: (userData: {
@@ -30,6 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   axios.defaults.baseURL = "http://localhost:3000";
   axios.defaults.withCredentials = true;
@@ -80,13 +82,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setUser(response.data);
       } catch {
         setUser(null);
+      } finally {
+        setLoading(false);
       }
     };
     checkAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

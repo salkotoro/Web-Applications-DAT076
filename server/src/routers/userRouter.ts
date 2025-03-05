@@ -4,7 +4,7 @@ import { userController } from "../controllers/userController";
 
 declare module "express-session" {
   interface Session {
-    userId?: number;
+    userId: number | undefined;
   }
 }
 
