@@ -8,6 +8,15 @@ interface FormErrors {
   firstName?: string;
   lastName?: string;
   email?: string;
+  general?: string;
+}
+
+interface ApiError {
+  response?: {
+    data?: {
+      message: string;
+    };
+  };
 }
 
 const Register = () => {
@@ -87,15 +96,15 @@ const Register = () => {
     try {
       await register(formData);
       navigate("/");
-    } catch (err: any) {
-      // Handle specific backend errors
-      if (err.response?.data?.message) {
-        if (err.response.data.message.includes("username")) {
+    } catch (err: unknown) {
+      const error = err as ApiError;
+      if (error.response?.data?.message) {
+        if (error.response.data.message.includes("username")) {
           setErrors((prev) => ({
             ...prev,
             username: "This username is already taken",
           }));
-        } else if (err.response.data.message.includes("email")) {
+        } else if (error.response.data.message.includes("email")) {
           setErrors((prev) => ({
             ...prev,
             email: "This email is already registered",
@@ -103,7 +112,7 @@ const Register = () => {
         } else {
           setErrors((prev) => ({
             ...prev,
-            general: err.response.data.message,
+            general: error.response?.data?.message || "Registration failed",
           }));
         }
       } else {
