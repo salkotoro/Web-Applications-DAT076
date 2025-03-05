@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import UserForm from "../UserForm";
+import UserForm from "../src/UserForm";
 
 describe("UserForm Component", () => {
   // Unit tests

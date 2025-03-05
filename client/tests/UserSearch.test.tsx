@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import UserSearch from "../UserSearch";
+import UserSearch from "../src/UserSearch";
 
 describe("UserSearch Component", () => {
   // Unit tests

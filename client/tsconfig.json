@@ -22,8 +22,12 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["node", "@testing-library/jest-dom"]
   },
-  "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": [
+    "src",
+    "tests/Header.test.tsx",
+    "tests/UserEditForm.test.tsx",
+    "tests/UserForm.test.tsx",
+    "tests/UserSearch.test.tsx"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

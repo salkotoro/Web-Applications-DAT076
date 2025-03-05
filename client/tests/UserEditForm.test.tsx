@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import UserEditForm from "../UserEditForm";
+import UserEditForm from "../src/UserEditForm";
 
 const mockUser = {
   id: 1,
