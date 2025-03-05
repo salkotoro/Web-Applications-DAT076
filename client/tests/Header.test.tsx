@@ -21,6 +21,7 @@ const renderWithAuth = (component: React.ReactNode) => {
           login: jest.fn(),
           logout: jest.fn(),
           register: jest.fn(),
+          loading: false,
         }}
       >
         {component}
