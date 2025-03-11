@@ -1,17 +1,17 @@
 import express, { Request, Response } from 'express';
-import { ProjectService } from '../service/project';
+import { ProjectService } from '../service/project-service';
 
 const projectService = new ProjectService();
-export const router = express.Router();
+export const ProjectRouter = express.Router();
 
 //  Get all projects
-router.get('/', async (req: Request, res: Response) => {
+ProjectRouter.get('/', async (req: Request, res: Response) => {
     const projects = await projectService.getProjects();
     res.json(projects);
 });
 
 //  Get a project by ID
-router.get('/:idProj', async (req: Request, res: Response) => {
+ProjectRouter.get('/:idProj', async (req: Request, res: Response) => {
     const idProj = parseInt(req.params.idProj);
     const project = await projectService.getProjectById(idProj);
     
@@ -20,16 +20,21 @@ router.get('/:idProj', async (req: Request, res: Response) => {
 });
 
 //  Create a new project
-router.post('/proj', async (req: Request, res: Response) => {
+ProjectRouter.post('/proj', async (req: Request, res: Response) => {
     const { name, description, salary, roles } = req.body;
     
     //Add exception handling
-    const newProject = await projectService.createProject(name, description, salary, roles);
+    const newProject = await projectService.createProject(
+        name,
+         description,
+          salary,
+           roles
+        );
     res.status(201).json(newProject);
 });
 
 //  Update a project
-router.put('/:idProj', async (req: Request, res: Response) => {
+ProjectRouter.put('/:idProj', async (req: Request, res: Response) => {
     const idProj = parseInt(req.params.idProj);
     const { name, description, salary, roles, open } = req.body;
 
@@ -40,7 +45,7 @@ router.put('/:idProj', async (req: Request, res: Response) => {
 });
 
 //  Delete a project
-router.delete('/:idProj', async (req: Request, res: Response) => {
+ProjectRouter.delete('/:idProj', async (req: Request, res: Response) => {
     const idProj = parseInt(req.params.idProj);
     const deleted = await projectService.deleteProject(idProj);
 
@@ -49,7 +54,7 @@ router.delete('/:idProj', async (req: Request, res: Response) => {
 });
 
 //  Add a user to a project
-router.post('/:idProj/users/:id', async (req: Request, res: Response) => {
+ProjectRouter.post('/:idProj/users/:id', async (req: Request, res: Response) => {
     const idProj = parseInt(req.params.idProj);
     const id = parseInt(req.params.id);
 
@@ -60,7 +65,7 @@ router.post('/:idProj/users/:id', async (req: Request, res: Response) => {
 });
 
 //  Remove a user from a project
-router.delete('/:idProj/users/:id', async (req: Request, res: Response) => {
+ProjectRouter.delete('/:idProj/users/:id', async (req: Request, res: Response) => {
     const idProj = parseInt(req.params.idProj);
     const id = parseInt(req.params.id);
 
@@ -70,4 +75,4 @@ router.delete('/:idProj/users/:id', async (req: Request, res: Response) => {
     else res.status(404).json({ message: 'Project not found' });
 });
 
-export default router
+export default ProjectRouter

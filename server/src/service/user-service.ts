@@ -1,4 +1,4 @@
-import { User } from "../model/user";
+import { User } from "../model/user-model";
 
 export class UserService {
   private users: User[] = [];

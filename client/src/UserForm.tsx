@@ -28,7 +28,7 @@ const UserForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("http://localhost:3000/user/", {
+    fetch("http://localhost:3000/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

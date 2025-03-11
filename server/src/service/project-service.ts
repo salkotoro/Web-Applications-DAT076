@@ -1,4 +1,4 @@
-import { Project } from "../model/project";
+import { Project } from "../model/project-model";
 
 export class ProjectService {
     private projects: Project[] = [];
