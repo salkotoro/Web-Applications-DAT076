@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+import '@testing-library/jest-dom';
+
 import ProjectView from "./ProjectView";
 global.fetch = jest.fn(() =>
   Promise.resolve({

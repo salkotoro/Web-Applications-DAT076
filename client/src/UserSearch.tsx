@@ -67,7 +67,7 @@ const UserSearch: React.FC = () => {
                 className="list-group-item d-flex align-items-center"
               >
                 <FaUser className="me-2 text-primary" /> {/* User icon */}
-                {user.firstName} {user.lastName}
+                {user.firstName}{user.lastName}
               </li>
             ))}
           </ul>

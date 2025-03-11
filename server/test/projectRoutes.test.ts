@@ -5,7 +5,7 @@ describe("Project API Routes", () => {
     let projectId: number;
 
     test("should create a new project", async () => {
-        const res = await request(app).post("/projects").send({
+        const res = await request(app).post("/projects/proj").send({
             name: "Project A",
             description: "Test project",
             salary: 60000,
@@ -34,7 +34,7 @@ describe("Project API Routes", () => {
     });
 
     test("should update a project", async () => {
-        const res = await request(app).patch(`/projects/${projectId}`).send({
+        const res = await request(app).put(`/projects/${projectId}`).send({
             name: "Updated Project Name"
         });
         expect(res.statusCode).toBe(200);
@@ -48,7 +48,7 @@ describe("Project API Routes", () => {
 
     test("should delete a project", async () => {
         const res = await request(app).delete(`/projects/${projectId}`);
-        expect(res.statusCode).toBe(200);
+        expect(res.statusCode).toBe(204);
     });
 
     test("should return 404 when deleting non-existent project", async () => {
