@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { FaUser } from "react-icons/fa"; // User icon
+import React, { useState } from "react";
+import { FaUser } from "react-icons/fa";
 
-// Define User interface
 interface User {
   id: number;
   firstName: string;
@@ -10,29 +9,42 @@ interface User {
   email: string;
 }
 
+// Fake user data (to be replaced with backend data)
+const fakeUsers: User[] = [
+  {
+    id: 1,
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    email: "john@example.com",
+  },
+  {
+    id: 2,
+    firstName: "Jane",
+    lastName: "Smith",
+    username: "janesmith",
+    email: "jane@example.com",
+  },
+  {
+    id: 3,
+    firstName: "Michael",
+    lastName: "Brown",
+    username: "michaelb",
+    email: "michael@example.com",
+  },
+  {
+    id: 4,
+    firstName: "Emily",
+    lastName: "Johnson",
+    username: "emilyj",
+    email: "emily@example.com",
+  },
+];
 
-
-const UserSearch: React.FC = () => {
+export const UserSearch = () => {
   const [query, setQuery] = useState("");
-  const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  useEffect(() => {
-    // Replace this URL with your backend endpoint for fetching users
-    fetch("http://localhost:3000/api/users/")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-      });
-  }, []);
-  // Handle input change and filter users
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
@@ -40,7 +52,7 @@ const UserSearch: React.FC = () => {
     if (value.trim() === "") {
       setFilteredUsers([]);
     } else {
-      const results = users.filter((user) =>
+      const results = fakeUsers.filter((user) =>
         `${user.firstName} ${user.lastName}`
           .toLowerCase()
           .includes(value.toLowerCase())
@@ -66,8 +78,8 @@ const UserSearch: React.FC = () => {
                 key={user.id}
                 className="list-group-item d-flex align-items-center"
               >
-                <FaUser className="me-2 text-primary" /> {/* User icon */}
-                {user.firstName}{user.lastName}
+                <FaUser className="me-2 text-primary" />
+                {user.firstName} {user.lastName}
               </li>
             ))}
           </ul>
@@ -76,5 +88,3 @@ const UserSearch: React.FC = () => {
     </div>
   );
 };
-
-export default UserSearch;

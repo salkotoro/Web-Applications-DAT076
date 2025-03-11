@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "./ProjectView.css";
+import "./project.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Project {
@@ -19,7 +19,7 @@ function ProjectView() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/projects/${id}`)
+    fetch(`http://localhost:3000/api/projects/${id}`)
       .then((response) => response.json())    
       .then((data) => {
         // Ensure roles is defined

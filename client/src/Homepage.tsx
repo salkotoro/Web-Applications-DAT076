@@ -17,7 +17,7 @@ interface Project {
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
-      fetch("http://localhost:3000/projects") 
+      fetch("http://localhost:3000/api/projects") 
         .then((response) => response.json())
         .then((data) => {
           setProjects(data); 
@@ -31,24 +31,6 @@ interface Project {
 
   return (
     <>
-    <header className='bg-primary text-white text-center py-4'>
-     <h1>Project Employment Hub</h1>
-     <p>Find exciting project roles in software and computer science.</p>
-        {/* Navigation buttons in the upper right */}
-        <div style={{ position: "absolute", top: "5px", right: "10px" }}>
-          <Link to="/userform" className="btn btn-secondary me-2">
-            User Form
-          </Link>
-          <Link to="/usersearch" className="btn btn-secondary me-2">
-            User Search
-          </Link>
-          <Link to="/usereditform" className="btn btn-secondary">
-            Edit User
-          </Link>
-        </div>
-     </header>
-
-
      <main className="container mt-5">
         {loading ? (
           <p>Loading projects...</p>
@@ -72,7 +54,7 @@ interface Project {
           </div>
         )}
       </main>
-      </>
+    </>
     
   )
 }

@@ -11,13 +11,7 @@ interface User {
 }
 
 const UserEditFormWrapper: React.FC = () => {
-  const [user, setUser] = useState<User>({
-      id: 0, // default value; user can edit this field
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-    });
+const [user, setUser] = useState<User | null>(null);
 const [error, setError] = useState<string | null>(null);
 const [loading, setLoading] = useState(false);
       
@@ -25,7 +19,7 @@ const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Replace the URL with your backend endpoint for the current user
-    fetch("http://localhost:3000/user/")
+    fetch("http://localhost:3000/api/users/me", { credentials: "include" })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch user");
@@ -44,7 +38,7 @@ const [loading, setLoading] = useState(false);
   }, []);
 
   const handleSave = (updatedUser: User) => {
-    fetch(`http://localhost:3000/user/${updatedUser.id}`, {
+    fetch(`http://localhost:3000/api/users/${updatedUser.id}`, {
       method: "PATCH", 
       headers: {
         "Content-Type": "application/json",

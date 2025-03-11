@@ -38,19 +38,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ userData, onSave }) => {
       >
         <h1 className="text-center mb-4">Edit User</h1>
         <form aria-label="edit-user-form" onSubmit={handleSave}>
-        <div className="mb-3">
-            <label htmlFor="id" className="form-label">
-              User ID
-            </label>
-            <input
-              id="id"
-              type="number"
-              name="id"
-              value={user.id}
-              onChange={handleChange}  // <-- Add this line
-              className="form-control"
-            />
-          </div>
+
           <div className="mb-3">
             <label htmlFor="firstName" className="form-label">
               First Name
