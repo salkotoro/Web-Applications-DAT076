@@ -8,6 +8,8 @@ import Homepage from "../Homepage";
 import ProjectView from "./ProjectView";
 import UserEditFormWrapper from "../UsersListWrapper";
 import UserForm from "../UserForm";
+import ProjectForm from "./ProjectForm";
+import ProjectSearch from "./ProjectSearch";
 
 const LoadingSpinner = () => (
   
@@ -63,8 +65,23 @@ export const AppRoutes = () => {
       />
       <Route path="/" element={<Homepage />} />  
       <Route path="/projects/:id" element={<ProjectView />} />
-
       <Route path="/profile" element={<UserEditFormWrapper />} />
+      <Route
+      path="/create-project"
+      element={
+        <ProtectedRoute>
+          <ProjectForm />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/projectsearch"
+      element={
+        <ProtectedRoute>
+          <ProjectSearch />
+        </ProtectedRoute>
+      }
+    />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

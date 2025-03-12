@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import { FaUser, FaSearch, FaSignOutAlt, FaEdit } from "react-icons/fa";
+import { FaUser, FaSearch, FaSignOutAlt, FaEdit, FaPlus } from "react-icons/fa";
 
 export const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,9 +11,10 @@ export const Header = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement project search
-    console.log("Searching for:", searchQuery);
+    // Navigate to the homepage with a "search" query parameter
+    navigate(`/?search=${encodeURIComponent(searchQuery)}`);
   };
+  
 
   const handleLogout = async () => {
     try {
@@ -68,6 +69,16 @@ export const Header = () => {
               >
                 <FaEdit className="me-2" />
                 Edit Profile
+              </button>
+                        <button
+                className="dropdown-item"
+                onClick={() => {
+                  navigate("/create-project");
+                  setShowDropdown(false);
+                }}
+              >
+                <FaPlus className="me-2" />
+                Create Project
               </button>
               <button
                 className="dropdown-item text-danger"
