@@ -1,53 +1,147 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { Header } from "../src/components/Header";
-import { AuthContext } from "../src/context/AuthContext";
+import Header from "../src/components/Header";
+import * as authHook from "../src/context/useAuth";
 
-const mockUser = {
-  id: 1,
-  username: "testuser",
-  firstName: "Test",
-  lastName: "User",
-  email: "test@example.com",
-};
+// Spy on the useAuth hook
+const mockUseAuth = jest.spyOn(authHook, 'useAuth');
 
-const renderWithAuth = (component: React.ReactNode) => {
-  return render(
-    <BrowserRouter>
-      <AuthContext.Provider
-        value={{
-          user: mockUser,
-          login: jest.fn(),
-          logout: jest.fn(),
-          register: jest.fn(),
-          loading: false,
-        }}
-      >
-        {component}
-      </AuthContext.Provider>
-    </BrowserRouter>
-  );
-};
+// Mock the react-router-dom hooks
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+  useLocation: () => ({ pathname: '/' })
+}));
 
 describe("Header Component", () => {
-  test("renders header with user name", () => {
-    renderWithAuth(<Header />);
-    expect(screen.getByText("Project Manager")).toBeInTheDocument();
+  // Setup mock for useAuth methods
+  const mockIsAuthenticated = jest.fn();
+  const mockIsEmployer = jest.fn();
+  const mockIsEmployee = jest.fn();
+  const mockLogout = jest.fn();
+
+  beforeEach(() => {
+    mockUseAuth.mockReturnValue({
+      user: null,
+      logout: mockLogout,
+      isAuthenticated: mockIsAuthenticated,
+      isEmployer: mockIsEmployer,
+      isEmployee: mockIsEmployee
+    } as any);
+    
+    mockIsAuthenticated.mockReturnValue(false);
+    mockIsEmployer.mockReturnValue(false);
+    mockIsEmployee.mockReturnValue(false);
+    
+    jest.clearAllMocks();
   });
 
-  test("search form works", () => {
-    renderWithAuth(<Header />);
-    const searchInput = screen.getByPlaceholderText("Search projects...");
-    fireEvent.change(searchInput, { target: { value: "test project" } });
-    expect(searchInput).toHaveValue("test project");
+  // Unit tests
+  test("renders logo", () => {
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText("Project Hub")).toBeInTheDocument();
   });
 
-  test("dropdown shows user menu", () => {
-    renderWithAuth(<Header />);
-    const userButton = screen.getByText(/Test User/);
-    fireEvent.click(userButton);
-    expect(screen.getByText("Edit Profile")).toBeInTheDocument();
-    expect(screen.getByText("Sign Out")).toBeInTheDocument();
+  test("shows login and register buttons when not authenticated", () => {
+    mockIsAuthenticated.mockReturnValue(false);
+    
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    // First click the profile button to open the dropdown
+    const profileButton = screen.getByRole('button', { name: '' });
+    fireEvent.click(profileButton);
+
+    // Now check for the login and register buttons in the dropdown
+    expect(screen.getByText("Login")).toBeInTheDocument();
+    expect(screen.getByText("Quick Register")).toBeInTheDocument();
   });
-});
+
+  test("shows user dropdown when authenticated", () => {
+    mockIsAuthenticated.mockReturnValue(true);
+    mockUseAuth.mockReturnValue({
+      user: { username: "testuser", firstName: "Test", lastName: "User" },
+      logout: mockLogout,
+      isAuthenticated: mockIsAuthenticated,
+      isEmployer: mockIsEmployer,
+      isEmployee: mockIsEmployee
+    } as any);
+    
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    // Open the dropdown first
+    const profileButton = screen.getByRole('button', { name: '' });
+    fireEvent.click(profileButton);
+
+    // Now check that the user info is in the dropdown
+    const userFullName = screen.getByText("Test User");
+    expect(userFullName).toBeInTheDocument();
+  });
+
+  test("shows employer-specific links when user is an employer", () => {
+    mockIsAuthenticated.mockReturnValue(true);
+    mockIsEmployer.mockReturnValue(true);
+    
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText(/My Projects/i)).toBeInTheDocument();
+    expect(screen.getByText(/Applicants/i)).toBeInTheDocument();
+  });
+
+  test("shows employee-specific links when user is an employee", () => {
+    mockIsAuthenticated.mockReturnValue(true);
+    mockIsEmployee.mockReturnValue(true);
+    
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText(/My Applications/i)).toBeInTheDocument();
+  });
+
+  // Integration tests
+  test("calls logout function when logout button is clicked", () => {
+    mockIsAuthenticated.mockReturnValue(true);
+    mockUseAuth.mockReturnValue({
+      user: { username: "testuser", firstName: "Test", lastName: "User" },
+      logout: mockLogout,
+      isAuthenticated: mockIsAuthenticated,
+      isEmployer: mockIsEmployer,
+      isEmployee: mockIsEmployee
+    } as any);
+    
+    render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+
+    // Open the user dropdown
+    const profileButton = screen.getByRole('button', { name: '' });
+    fireEvent.click(profileButton);
+    
+    // Click the logout button
+    const logoutButton = screen.getByText(/Sign Out/i);
+    fireEvent.click(logoutButton);
+    
+    expect(mockLogout).toHaveBeenCalled();
+  });
+}); 

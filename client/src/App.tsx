@@ -1,15 +1,15 @@
-import { Project } from "./components/Project";
-import { UserSearch } from "./components/UserSearch";
-import { Header } from "./components/Header";
+import Header from "./components/Header";
+import { AppRoutes } from "./components/ProtectedRoutes";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+
   return (
     <div>
-      <Header />
-      <div className="container mt-4">
-        <Project />
-        <UserSearch />
-      </div>
+      {!isAuthPage && <Header />}
+      <AppRoutes />
     </div>
   );
 };

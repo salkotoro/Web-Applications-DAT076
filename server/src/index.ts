@@ -3,6 +3,8 @@ import cors from "cors";
 import session from "express-session";
 import express from "express";
 import { userRouter } from "./routers/userRouter";
+import { sequelize } from "../db/conn";
+import { projectRouter } from "./routers/projectRouter";
 
 const port = process.env.PORT || 3000;
 
@@ -31,6 +33,13 @@ app.use(
 
 app.use(express.json());
 app.use("/api/users", userRouter);
+app.use("/api/projects", projectRouter);
+
+// Sync database models with the database
+// WARNING: Using {force: true} will drop all tables - only use in development
+sequelize.sync({ alter: true }).then(() => {
+  console.log("Database schema synchronized");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
