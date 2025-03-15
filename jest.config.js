@@ -1,13 +1,11 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "jest-fixed-jsdom",
+  testEnvironment: "node",
+  roots: ["<rootDir>/test"],
   transform: {
-    "^.+.tsx?$": ["ts-jest",{}],
-  },
-  moduleNameMapper: {
-    "^.+\\.(css|scss|sass|less)$": "identity-obj-proxy", 
-    "^react$": "<rootDir>/node_modules/react",
-    "^react-dom$": "<rootDir>/node_modules/react-dom"
+    "^.+\\.tsx?$": "ts-jest",
+      '^.+\.tsx?$': 'ts-jest', // Add TypeScript transformation
+      '^.+\.jsx?$': 'babel-jest', // Add Babel transformation for ES6 modules
   },
 };
