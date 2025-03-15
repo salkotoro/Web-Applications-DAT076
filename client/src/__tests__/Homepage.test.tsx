@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom';
 
-import Homepage from "./Homepage";
+import Homepage from "../Homepage.tsx";
 import { BrowserRouter } from "react-router-dom";
 
 describe("Homepage Component", () => {
