@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./Homepage";
-import ProjectView from "./components/ProjectView";
+import ProjectView from "./ProjectView";
 import UserForm from "./UserForm";
 import UserSearch from "./UserSearch";
 import UserEditForm from "./UserEditForm";
 import UserEditFormWrapper from "./UsersListWrapper";
-import { Project } from "./components/Project";
-import { Header } from "./components/Header";
+import { Project } from ".//Project";
+import { Header } from ".//Header";
+import React from "react";
 
 function App() {
   return (

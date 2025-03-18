@@ -3,11 +3,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import { Login } from "./Login";
 import Register from "./Register";
-import App from "../App";
+import App from "./App";
 import Homepage from "../Homepage";
 import ProjectView from "./ProjectView";
-import UserEditFormWrapper from "../UsersListWrapper";
-import UserForm from "../UserForm";
+import UserEditFormWrapper from "./UsersListWrapper";
+import UserForm from "./UserForm";
 import ProjectForm from "./ProjectForm";
 import ProjectSearch from "./ProjectSearch";
 

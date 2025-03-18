@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./project.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
 
 interface Project {
   idProj: number;
