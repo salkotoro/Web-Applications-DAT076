@@ -99,7 +99,7 @@ errors: Contains any validation errors for each field.
 isSubmitting: Boolean that indicates whether the form submission is in progress.
 On submission, it calls the register method from the useAuth() hook, which sends a POST request to
 /api/users/register. On success, navigates to the homepage.
-• ProjectSearch.tsx:
+• • ProjectSearch.tsx:
 Implements project search functionality by reading the search term from the URL query parameter
 and fetching matching projects from the backend, extracts query parameters via useLocation().
 projects: An array of projects returned from the backend that match the search term.
@@ -110,8 +110,15 @@ Uses the useEffect() hook to perform a GET request to http://localhost:3000/api/
 Includes credentials in the request to ensure that session data is sent. Displays the results as project
 cards (similar in appearance to the Homepage).
 • UserSearch.tsx:
-Provides a client-side user search/filter component, uses local state.
-4 API Documentation
+Provides a client-side user search/filter component, uses local state. query: The current search string
+entered by the user. filteredUsers: The list of users filtered from data based on the query.
+• ProjectSearch.tsx:
+Implements project search functionality by reading the search term from the URL query parameter
+and fetching matching projects from the backend. projects: An array of projects returned from the
+backend that match the search term.loading: A boolean whether the data is still being fetched. error:
+Stores any error messages encountered during the fetch. Uses the useEffect() hook to perform a GET
+request to http://localhost:3000/api/projects?search=$searchTerm. 
+# 4 API Documentation
 This section provides a detailed specification of the backend API, including supported HTTP methods,
 endpoints, request bodies, and responses for both successful and error cases. The API is divided into
 two main routers: userRouter for user-related operations and projectRouter for project-related
