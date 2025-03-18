@@ -5,7 +5,7 @@ import { projectService } from "../services/projectService";
 export const projectRouter = express.Router();
 
 // Create a new project
-projectRouter.post("/", async (req: Request, res: Response) => {
+projectRouter.post("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await projectService.createProject(req.body);
     res.status(201).json(project);
@@ -17,7 +17,7 @@ projectRouter.post("/", async (req: Request, res: Response) => {
 });
 
 // Get all projects
-projectRouter.get("/", async (req: Request, res: Response) => {
+projectRouter.get("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const projects = await projectService.getAllProjects();
     res.status(200).json(projects);

@@ -1,5 +1,6 @@
 import { testSession } from "./setup";
 import bcrypt from "bcrypt";
+import request from "supertest";
 
 describe("Authentication", () => {
   const testUser = {
@@ -67,4 +68,4 @@ describe("Authentication", () => {
     const response = await testSession.get("/api/projects");
     expect(response.status).toBe(401);
   });
-});
+}); 
