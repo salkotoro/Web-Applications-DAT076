@@ -1,4 +1,4 @@
-
+Please open in code mode.
 # Top level:
 .
 ├── client                   # Frontend client, frontend server, frontend tests
