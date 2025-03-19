@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { UserType } from "../context/AuthContext";
 
 interface FormErrors {
   username?: string;
@@ -8,6 +9,7 @@ interface FormErrors {
   firstName?: string;
   lastName?: string;
   email?: string;
+  companyName?: string;
   general?: string;
 }
 
@@ -26,11 +28,13 @@ const Register = () => {
     firstName: "",
     lastName: "",
     email: "",
+    companyName: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userType, setUserType] = useState<UserType>(UserType.EMPLOYEE);
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { registerEmployee, registerEmployer } = useAuth();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -65,6 +69,11 @@ const Register = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
+    // Company name validation for employers
+    if (userType === UserType.EMPLOYER && !formData.companyName) {
+      newErrors.companyName = "Company name is required for employers";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -84,6 +93,10 @@ const Register = () => {
     }
   };
 
+  const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserType(e.target.value as UserType);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -94,7 +107,12 @@ const Register = () => {
     }
 
     try {
-      await register(formData);
+      if (userType === UserType.EMPLOYER) {
+        await registerEmployer(formData as any);
+      } else {
+        const { companyName, ...employeeData } = formData;
+        await registerEmployee(employeeData);
+      }
       navigate("/");
     } catch (err: unknown) {
       const error = err as ApiError;
@@ -137,6 +155,38 @@ const Register = () => {
                 <div className="alert alert-danger">{errors.general}</div>
               )}
               <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label d-block">Registration Type</label>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userType"
+                      id="employee"
+                      value={UserType.EMPLOYEE}
+                      checked={userType === UserType.EMPLOYEE}
+                      onChange={handleUserTypeChange}
+                    />
+                    <label className="form-check-label" htmlFor="employee">
+                      Employee
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userType"
+                      id="employer"
+                      value={UserType.EMPLOYER}
+                      checked={userType === UserType.EMPLOYER}
+                      onChange={handleUserTypeChange}
+                    />
+                    <label className="form-check-label" htmlFor="employer">
+                      Employer
+                    </label>
+                  </div>
+                </div>
+
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username
@@ -232,6 +282,29 @@ const Register = () => {
                     <div className="invalid-feedback">{errors.email}</div>
                   )}
                 </div>
+
+                {userType === UserType.EMPLOYER && (
+                  <div className="mb-3">
+                    <label htmlFor="companyName" className="form-label">
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      className={`form-control ${
+                        errors.companyName ? "is-invalid" : ""
+                      }`}
+                      id="companyName"
+                      name="companyName"
+                      value={formData.companyName}
+                      onChange={handleChange}
+                      required
+                    />
+                    {errors.companyName && (
+                      <div className="invalid-feedback">{errors.companyName}</div>
+                    )}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   className="btn btn-primary w-100"
@@ -250,6 +323,10 @@ const Register = () => {
                     "Register"
                   )}
                 </button>
+                
+                <div className="mt-3 text-center">
+                  Already have an account? <Link to="/login">Login</Link>
+                </div>
               </form>
             </div>
           </div>
