@@ -7,6 +7,7 @@ Please open in code mode.
 ├── client_mockup            # Initial mockup and frontend brainstorming of the application 
 ├── Report                   # Main report in .pdf, as well as .md. 
 ├── server                   # Backend server, along with its tests.
+│   ├── db                   # All database files
 │   ├── src                  # All frontend unit tests
 │   ├── test                 # All backend tests
 │   ├── .env                 # Necessary components to construct the frontend UI and functionality 
@@ -27,6 +28,7 @@ client
 # Server:
 server
 ├── src                      # Source files for the backend UI and client
+│   ├── backup               # Backup files for development
 │   ├── controllers          # Controllers for user and project interactions
 │   ├── middleware           # Authentication middleware
 │   ├── model                # Obsolete 

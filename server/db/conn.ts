@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'test') {
   });
 } else {
   console.log('Using PostgreSQL database');
-  sequelize = new Sequelize('postgres://app_db_user:postgres@localhost:5432', {
+  sequelize = new Sequelize('postgres://app_db_user:<password>@localhost:5432', {
     logging: process.env.NODE_ENV === 'development' // Only log in development mode
   });
 }
