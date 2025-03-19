@@ -8,7 +8,7 @@
     "esModuleInterop": true,
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -20,10 +20,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node", "@testing-library/jest-dom"]
+    "types": ["node", "@testing-library/jest-dom", "react", "react-dom", "react-router-dom"]
   },
-  "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": [
+    "src",
+    "tests/Header.test.tsx",
+    "tests/UserEditForm.test.tsx",
+    "tests/UserForm.test.tsx",
+    "tests/UserSearch.test.tsx",
+    "tests/Login.test.tsx",
+    "tests/Register.test.tsx"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
